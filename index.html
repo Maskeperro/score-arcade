@@ -20,6 +20,24 @@
                     const scoreSections = document.getElementById("score-sections");
                     let generalScores = {};
                     
+                    const gameNames = {
+                        "game1": "Pac-Man",
+                        "game2": "Space Invaders",
+                        "game3": "Donkey Kong",
+                        "game4": "Galaga",
+                        "game5": "Street Fighter II",
+                        "general": "Ranking General"
+                    };
+                    
+                    const gameImages = {
+                        "game1": "pacman.jpg",
+                        "game2": "space_invaders.jpg",
+                        "game3": "donkey_kong.jpg",
+                        "game4": "galaga.jpg",
+                        "game5": "street_fighter.jpg",
+                        "general": "general.jpg"
+                    };
+                    
                     Object.keys(data.scores).forEach(game => {
                         if (game !== "general") {
                             data.scores[game].forEach(player => {
@@ -40,7 +58,10 @@
                     Object.keys(data.scores).forEach(game => {
                         let section = document.createElement("div");
                         section.classList.add("game-section");
-                        section.innerHTML = `<h2>${game.toUpperCase()}</h2>`;
+                        section.innerHTML = `
+                            <h2>${gameNames[game]}</h2>
+                            <img src="images/${gameImages[game]}" alt="${gameNames[game]}" class="game-image">
+                        `;
                         
                         let table = document.createElement("table");
                         table.innerHTML = `
@@ -72,5 +93,4 @@
     </script>
 </body>
 </html>
-
 
