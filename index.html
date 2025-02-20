@@ -78,6 +78,7 @@
                         "general": "general.jpg"
                     };
                     
+                    // Recorremos todos los juegos para generar la tabla general
                     Object.keys(data.scores).forEach(game => {
                         if (game !== "general") {
                             data.scores[game].forEach(player => {
@@ -93,9 +94,27 @@
                         }
                     });
                     
+                    // Asegurar que todos los jugadores estén en la tabla general
+                    Object.keys(data.scores).forEach(game => {
+                        if (game !== "general") {
+                            data.scores[game].forEach(player => {
+                                if (!generalScores[player.initials]) {
+                                    generalScores[player.initials] = {
+                                        name: player.name,
+                                        initials: player.initials,
+                                        score: player.score // Se usa solo el puntaje de un juego si es único
+                                    };
+                                }
+                            });
+                        }
+                    });
+                    
                     data.scores.general = Object.values(generalScores).sort((a, b) => b.score - a.score);
                     
                     Object.keys(data.scores).forEach(game => {
+                        // Ordenar cada juego por puntaje descendente
+                        data.scores[game].sort((a, b) => b.score - a.score);
+                        
                         let section = document.createElement("div");
                         section.classList.add("game-section");
                         section.innerHTML = `
