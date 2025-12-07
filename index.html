@@ -5,154 +5,200 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top Score Arcade</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .game-section {
-            text-align: center;
-            padding: 20px;
-            border: 2px solid limegreen;
-            border-radius: 10px;
-            margin: 20px auto;
-            width: 80%;
-            background-color: black;
-            box-shadow: 0 0 10px limegreen;
-        }
-        .game-image {
-            width: 100%;
-            max-width: 500px;
-            max-height: 350px;
-            height: auto;
-            display: block;
-            margin: 10px auto;
-            border-radius: 10px;
-            box-shadow: 0 0 10px limegreen;
-        }
-        .score-table {
-            max-height: 200px;
-            overflow-y: auto;
-            display: block;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            border: 1px solid limegreen;
-            text-align: center;
-        }
-        th {
-            background-color: darkgreen;
-            color: white;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="arcade-container">
-        <h1>🏆 Top Score Arcade 🏆</h1>
-        <div id="score-sections"></div>
+        <header>
+            <h1 onclick="showView('main-menu')" style="cursor: pointer;">🏆 Top Score Arcade 🏆</h1>
+            <button id="back-btn" class="nav-btn hidden" onclick="showView('main-menu')">⬅ Volver al Menú</button>
+        </header>
+
+        <div id="main-menu" class="view active">
+            <div class="menu-options">
+                <div class="menu-card" onclick="showView('games-list')">
+                    <h2>🕹️ JUEGOS</h2>
+                    <p>Ver lista de juegos, historias y trucos</p>
+                </div>
+                <div class="menu-card" onclick="showGeneralRanking()">
+                    <h2>👑 RANKING GENERAL</h2>
+                    <p>¿Quién es el rey del arcade?</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="games-list" class="view hidden">
+            <h2>Selecciona un Cartucho</h2>
+            <div id="games-grid" class="games-grid">
+                </div>
+        </div>
+
+        <div id="game-detail" class="view hidden">
+            </div>
+
+        <div id="general-ranking" class="view hidden">
+            <h2>Clasificación Global</h2>
+            <div class="score-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Jugador</th>
+                            <th>Iniciales</th>
+                            <th>Puntaje Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="general-ranking-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     
     <script>
+        let arcadeData = {};
+
         document.addEventListener("DOMContentLoaded", () => {
             fetch("scores.json")
                 .then(response => response.json())
                 .then(data => {
-                    const scoreSections = document.getElementById("score-sections");
-                    let generalScores = {};
-                    
-                    const gameNames = {
-                        "game1": "Pac-Man",
-                        "game2": "Space Invaders",
-                        "game3": "Donkey Kong",
-                        "game4": "Galaga",
-                        "game5": "Street Fighter II",
-                        "general": "Ranking General"
-                    };
-                    
-                    const gameImages = {
-                        "game1": "pacman.jpg",
-                        "game2": "space_invaders.jpg",
-                        "game3": "donkey_kong.jpg",
-                        "game4": "galaga.jpg",
-                        "game5": "street_fighter.jpg",
-                        "general": "general.jpg"
-                    };
-                    
-                    // Recorremos todos los juegos para generar la tabla general
-                    Object.keys(data.scores).forEach(game => {
-                        if (game !== "general") {
-                            data.scores[game].forEach(player => {
-                                if (!generalScores[player.initials]) {
-                                    generalScores[player.initials] = {
-                                        name: player.name,
-                                        initials: player.initials,
-                                        score: 0
-                                    };
-                                }
-                                generalScores[player.initials].score += player.score;
-                            });
-                        }
-                    });
-                    
-                    // Asegurar que todos los jugadores estén en la tabla general
-                    Object.keys(data.scores).forEach(game => {
-                        if (game !== "general") {
-                            data.scores[game].forEach(player => {
-                                if (!generalScores[player.initials]) {
-                                    generalScores[player.initials] = {
-                                        name: player.name,
-                                        initials: player.initials,
-                                        score: player.score // Se usa solo el puntaje de un juego si es único
-                                    };
-                                }
-                            });
-                        }
-                    });
-                    
-                    data.scores.general = Object.values(generalScores).sort((a, b) => b.score - a.score);
-                    
-                    Object.keys(data.scores).forEach(game => {
-                        // Ordenar cada juego por puntaje descendente
-                        data.scores[game].sort((a, b) => b.score - a.score);
-                        
-                        let section = document.createElement("div");
-                        section.classList.add("game-section");
-                        section.innerHTML = `
-                            <h2>${gameNames[game]}</h2>
-                            <img src="images/${gameImages[game]}" alt="${gameNames[game]}" class="game-image">
-                        `;
-                        
-                        let tableContainer = document.createElement("div");
-                        tableContainer.classList.add("score-table");
-                        
-                        let table = document.createElement("table");
-                        table.innerHTML = `
-                            <thead>
-                                <tr>
-                                    <th>Puesto</th>
-                                    <th>Nombre</th>
-                                    <th>Iniciales</th>
-                                    <th>Puntaje</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${data.scores[game].map((entry, index) => `
-                                    <tr>
-                                        <td>${index + 1}</td>
-                                        <td>${entry.name}</td>
-                                        <td>${entry.initials}</td>
-                                        <td>${entry.score}</td>
-                                    </tr>
-                                `).join("")}
-                            </tbody>
-                        `;
-                        tableContainer.appendChild(table);
-                        section.appendChild(tableContainer);
-                        scoreSections.appendChild(section);
-                    });
+                    arcadeData = data.games;
+                    renderGamesGrid();
                 })
-                .catch(error => console.error("Error cargando los puntajes:", error));
+                .catch(error => console.error("Error cargando los datos:", error));
         });
+
+        // Función para cambiar entre vistas
+        function showView(viewId) {
+            // Ocultar todas las vistas
+            document.querySelectorAll('.view').forEach(el => {
+                el.classList.remove('active');
+                el.classList.add('hidden');
+            });
+            
+            // Mostrar la seleccionada
+            const selected = document.getElementById(viewId);
+            selected.classList.remove('hidden');
+            selected.classList.add('active');
+
+            // Manejar botón volver
+            const backBtn = document.getElementById('back-btn');
+            if(viewId === 'main-menu') {
+                backBtn.classList.add('hidden');
+            } else {
+                backBtn.classList.remove('hidden');
+            }
+        }
+
+        // Renderizar la rejilla de juegos
+        function renderGamesGrid() {
+            const grid = document.getElementById('games-grid');
+            grid.innerHTML = '';
+
+            Object.values(arcadeData).forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.onclick = () => showGameDetail(game.id);
+                card.innerHTML = `
+                    <img src="images/${game.image}" alt="${game.title}">
+                    <h3>${game.title}</h3>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Renderizar detalle del juego
+        function showGameDetail(gameId) {
+            const game = arcadeData[gameId];
+            const container = document.getElementById('game-detail');
+            
+            // Ordenar puntajes
+            const sortedScores = [...game.scores].sort((a, b) => b.score - a.score);
+
+            container.innerHTML = `
+                <div class="game-header">
+                    <h2>${game.title}</h2>
+                    <img src="images/${game.image}" class="detail-image">
+                </div>
+                
+                <div class="game-info-panel">
+                    <div class="info-section">
+                        <h3>📜 Historia</h3>
+                        <p>${game.history}</p>
+                    </div>
+                    <div class="info-section">
+                        <h3>💡 Trucos</h3>
+                        <p>${game.tricks}</p>
+                    </div>
+                    <div class="info-links">
+                        <a href="${game.wikiUrl}" target="_blank" class="retro-btn">📖 Wikipedia</a>
+                    </div>
+                </div>
+
+                <div class="video-section">
+                    <h3>🎥 Gameplay</h3>
+                    <iframe width="100%" height="315" src="${game.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <div class="score-section">
+                    <h3>🏆 TOP SCORES</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rango</th>
+                                <th>Nombre</th>
+                                <th>Iniciales</th>
+                                <th>Puntaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sortedScores.map((s, i) => `
+                                <tr class="${i < 3 ? 'top-rank' : ''}">
+                                    <td>${i + 1}</td>
+                                    <td>${s.name}</td>
+                                    <td>${s.initials}</td>
+                                    <td>${s.score.toLocaleString()}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            showView('game-detail');
+        }
+
+        // Calcular y mostrar ranking general
+        function showGeneralRanking() {
+            let generalScores = {};
+
+            // Sumar todos los puntajes
+            Object.values(arcadeData).forEach(game => {
+                game.scores.forEach(player => {
+                    if (!generalScores[player.initials]) {
+                        generalScores[player.initials] = {
+                            name: player.name,
+                            initials: player.initials,
+                            score: 0
+                        };
+                    }
+                    generalScores[player.initials].score += player.score;
+                });
+            });
+
+            const sortedGeneral = Object.values(generalScores).sort((a, b) => b.score - a.score);
+            const tbody = document.getElementById('general-ranking-body');
+            
+            tbody.innerHTML = sortedGeneral.map((player, index) => `
+                <tr class="${index < 3 ? 'top-rank-gold' : ''}">
+                    <td>${index === 0 ? '👑' : index + 1}</td>
+                    <td>${player.name}</td>
+                    <td>${player.initials}</td>
+                    <td>${player.score.toLocaleString()}</td>
+                </tr>
+            `).join('');
+
+            showView('general-ranking');
+        }
     </script>
 </body>
 </html>
