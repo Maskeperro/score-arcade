@@ -1,43 +1,77 @@
 {
-  "scores": {
-    "game1": [
-      { "name": "Pablo", "initials": "PAB", "score": 5000 },
-      { "name": "Antonio", "initials": "ANT", "score": 4500 },
-      { "name": "Lucía", "initials": "LUC", "score": 4000 },
-      { "name": "Carlos", "initials": "CAR", "score": 3500 },
-      { "name": "Mercando", "initials": "MER", "score": 3000 },
-      { "name": "Sidereo", "initials": "SID", "score": 12000 },
-      { "name": "gurjuedro", "initials": "ESP", "score": 233000 },
-      { "name": "Sofía", "initials": "SOF", "score": 3000 }
-    ],
-    "game2": [
-      { "name": "Pablo", "initials": "PAB", "score": 6000 },
-      { "name": "Antonio", "initials": "ANT", "score": 5500 },
-      { "name": "Lucía", "initials": "LUC", "score": 5000 },
-      { "name": "Carlos", "initials": "CAR", "score": 4500 },
-      { "name": "Sofía", "initials": "SOF", "score": 4000 }
-    ],
-    "game3": [
-      { "name": "Pablo", "initials": "PAB", "score": 7000 },
-      { "name": "Antonio", "initials": "ANT", "score": 6500 },
-      { "name": "Lucía", "initials": "LUC", "score": 6000 },
-      { "name": "Carlos", "initials": "CAR", "score": 5500 },
-      { "name": "Sofía", "initials": "SOF", "score": 5000 }
-    ],
-    "game4": [
-      { "name": "Pablo", "initials": "PAB", "score": 8000 },
-      { "name": "Antonio", "initials": "ANT", "score": 7500 },
-      { "name": "Lucía", "initials": "LUC", "score": 7000 },
-      { "name": "Carlos", "initials": "CAR", "score": 6500 },
-      { "name": "Sofía", "initials": "SOF", "score": 6000 }
-    ],
-    "game5": [
-      { "name": "Pablo", "initials": "PAB", "score": 9000 },
-      { "name": "Antonio", "initials": "ANT", "score": 8500 },
-      { "name": "Lucía", "initials": "LUC", "score": 8000 },
-      { "name": "Carlos", "initials": "CAR", "score": 7500 },
-      { "name": "Sofía", "initials": "SOF", "score": 7000 }
-    ],
-    "general": []
+  "games": {
+    "game1": {
+      "id": "game1",
+      "title": "Pac-Man",
+      "image": "pacman.jpg",
+      "description": "El clásico de los clásicos. Recorre el laberinto comiendo puntos y esquivando fantasmas.",
+      "history": "Lanzado por Namco en 1980. Originalmente llamado 'Puck-Man' en Japón, se cambió el nombre en EE.UU. por miedo a que vandalizaran la 'P'. Fue diseñado por Toru Iwatani inspirándose en una pizza a la que le faltaba una porción.",
+      "tricks": "Cada fantasma tiene una personalidad única (Blinky te persigue, Pinky te embosca...). Apréndete sus patrones y usa los túneles laterales para escapar, ya que tú eres más rápido que ellos en las curvas.",
+      "wikiUrl": "https://es.wikipedia.org/wiki/Pac-Man",
+      "videoUrl": "https://www.youtube.com/embed/dScq4P5gn4A",
+      "scores": [
+        { "name": "gurjuedro", "initials": "ESP", "score": 233000 },
+        { "name": "Sidereo", "initials": "SID", "score": 12000 },
+        { "name": "Pablo", "initials": "PAB", "score": 5000 },
+        { "name": "Antonio", "initials": "ANT", "score": 4500 }
+      ]
+    },
+    "game2": {
+      "id": "game2",
+      "title": "Space Invaders",
+      "image": "space_invaders.jpg",
+      "description": "Defiende la Tierra de la invasión alienígena ola tras ola.",
+      "history": "Lanzado en 1978 por Taito. Fue tan popular en Japón que provocó una escasez temporal de monedas de 100 yenes. Definió el género de los 'shoot 'em up'.",
+      "tricks": "El 'Nagoya Attack': Es una técnica arriesgada que consiste en dejar que los invasores bajen casi hasta tocarte; en esa zona, sus disparos pasan a través de ti sin matarte.",
+      "wikiUrl": "https://es.wikipedia.org/wiki/Space_Invaders",
+      "videoUrl": "https://www.youtube.com/embed/437Ld_rKM2s",
+      "scores": [
+        { "name": "Pablo", "initials": "PAB", "score": 6000 },
+        { "name": "Antonio", "initials": "ANT", "score": 5500 }
+      ]
+    },
+    "game3": {
+      "id": "game3",
+      "title": "Donkey Kong",
+      "image": "donkey_kong.jpg",
+      "description": "Ayuda a Jumpman (Mario) a salvar a Pauline de las garras del gorila.",
+      "history": "Lanzado en 1981 por Nintendo. Fue el debut de Mario (entonces llamado Jumpman) y el primer juego en contar una historia visual con escenas.",
+      "tricks": "Aprende a controlar el salto. A diferencia de juegos modernos, aquí no puedes cambiar de dirección en el aire. ¡Calcula bien antes de saltar los barriles!",
+      "wikiUrl": "https://es.wikipedia.org/wiki/Donkey_Kong",
+      "videoUrl": "https://www.youtube.com/embed/Pp2aMs38ERY",
+      "scores": [
+        { "name": "Pablo", "initials": "PAB", "score": 7000 },
+        { "name": "Antonio", "initials": "ANT", "score": 6500 }
+      ]
+    },
+    "game4": {
+      "id": "game4",
+      "title": "Galaga",
+      "image": "galaga.jpg",
+      "description": "La secuela de Galaxian. Combate en el espacio y captura naves enemigas.",
+      "history": "Publicado por Namco en 1981. Introdujo la mecánica de permitir que tu nave fuera capturada para luego rescatarla y tener doble potencia de fuego.",
+      "tricks": "Deja que el jefe 'Boss Galaga' capture tu nave con su rayo tractor. Luego destrúyelo (sin dar a tu nave) para liberar tu nave antigua y jugar con dos naves a la vez.",
+      "wikiUrl": "https://es.wikipedia.org/wiki/Galaga",
+      "videoUrl": "https://www.youtube.com/embed/Dv1V7p9J8EQ",
+      "scores": [
+        { "name": "gurjuedro", "initials": "ESP", "score": 233000 },
+        { "name": "Sidereo", "initials": "SID", "score": 12000 },
+        { "name": "Pablo", "initials": "PAB", "score": 5800 },
+        { "name": "Antonio", "initials": "ANT", "score": 4500 }
+      ]
+    },
+    "game5": {
+      "id": "game5",
+      "title": "Street Fighter II",
+      "image": "street_fighter.jpg",
+      "description": "El rey de los juegos de lucha. ¡Hadouken!",
+      "history": "Lanzado en 1991 por Capcom. Revolucionó los juegos de lucha introduciendo combos y personajes con estilos de pelea únicos.",
+      "tricks": "El sistema de combos nació como un 'glitch' (error) que los desarrolladores decidieron dejar porque era divertido. ¡Intenta cancelar una animación con un ataque especial!",
+      "wikiUrl": "https://es.wikipedia.org/wiki/Street_Fighter_II",
+      "videoUrl": "https://www.youtube.com/embed/xI284D4y1q4",
+      "scores": [
+        { "name": "Pablo", "initials": "PAB", "score": 9000 }
+      ]
+    }
   }
 }
